@@ -8,11 +8,6 @@ import Sequelize from "sequelize";
 import Parser from 'rss-parser';
 const parser = new Parser();
 
-import { Client as Youtubei, MusicClient } from "youtubei";
-
-const youtubei = new Youtubei();
-
-
 let postCount = 0;
 const app = express();
 app.listen(3000);
@@ -41,132 +36,31 @@ const client = new Client({
 });
 
 client.commands = new Collection();
+CommandsRegister(client);
 
-const categoryFoldersPath = path.join(process.cwd(), "commands");
-const commandFolders = fs.readdirSync(categoryFoldersPath);
-
-for (const folder of commandFolders) {
-  const commandsPath = path.join(categoryFoldersPath, folder);
-  const commandFiles = fs.readdirSync(commandsPath).filter((file) => file.endsWith(".mjs"));
-  
-  for (const file of commandFiles) {
-    const filePath = path.join(commandsPath, file);
-    import(filePath).then((module) => {
-      client.commands.set(module.data.name, module);
-    });
-  }
-}
-
-const handlers = new Map();
-
-const handlersPath = path.join(process.cwd(), "handlers");
-const handlerFiles = fs.readdirSync(handlersPath).filter((file) => file.endsWith(".mjs"));
-
-for (const file of handlerFiles) {
-  const filePath = path.join(handlersPath, file);
-  import(filePath).then((module) => {
-    handlers.set(file.slice(0, -4), module);
-  });
-}
-
-client.on("interactionCreate", async (interaction) => {
-  await handlers.get("interactionCreate").default(interaction);
-});
-
-client.on("voiceStateUpdate", async (oldState, newState) => {
-  await handlers.get("voiceStateUpdate").default(oldState, newState);
-});
-
-client.on("messageCreate", async (message) => {
-  if (message.author.id == client.user.id || message.author.bot) return;
-  await handlers.get("messageCreate").default(message);
-});
-
-client.on("ready", async () => {
+client.on("clientReady", async () => {
   await client.user.setActivity('♡', { type: ActivityType.Custom, state: "睡眠サポート中…" });
   console.log(`${client.user.tag} がログインしました！`);
 });
 
-Notification.sync({ alter: true });
-YoutubeFeeds.sync({ alter: true });
-YoutubeNotifications.sync({ alter: true });
-
-CommandsRegister();
 client.login(process.env.TOKEN);
 
+client.on("interactionCreate", async (interaction) => {
+  if (!interaction.isCommand()) return;
 
-async function trigger() {
-  const youtubeNofications = await YoutubeNotifications.findAll({
-    attributes: [
-      [Sequelize.fn('DISTINCT', Sequelize.col('channelFeedUrl')) ,'channelFeedUrl'],
-    ]
-  });
-  await Promise.all(
-    youtubeNofications.map(async n => {
-      checkFeed(n.channelFeedUrl);
-    })
-  );
-}
+  const command = client.commands.get(interaction.commandName);
+  if (!command) {
+    console.error(`Command not found: ${interaction.commandName}`);
+    return;
+  }
 
-async function checkFeed(channelFeedUrl) {
-  
-  const youtubeFeed = await YoutubeFeeds.findOne({
-    where: {
-      channelFeedUrl: channelFeedUrl,
-    },
-  });
-  
-  const checkedDate = new Date(youtubeFeed.channelLatestUpdateDate);
-  let latestDate = new Date(youtubeFeed.channelLatestUpdateDate);
-  
-  const feed = await parser.parseURL(channelFeedUrl);
-  const videos = feed.items.map(i => {
-    const now = new Date(i.isoDate);
-    
-    if (now > checkedDate) {
-      if (now > latestDate) {
-        latestDate = now
-      }
-      return i;
-    }
-  });
-  
-  const notifications = await YoutubeNotifications.findAll({
-    where: {
-      channelFeedUrl: channelFeedUrl,
-    },
-  });
-  const youtubeChannelId = channelFeedUrl.split('=').at(1);
-  //const youtubeChannel = await youtubei.getChannel(youtubeChannelId);
-  
-  videos.forEach(async v => {
-    if (!v) return;
-    const youtubeVideolId = v.link.split('=').at(1);
-    const youtubeVideo = await youtubei.getVideo(youtubeVideolId);
-    
-    const embed = new EmbedBuilder()
-      .setColor(0xcd201f)
-      .setAuthor({ name: v.author, url: `https://www.youtube.com/channel/${youtubeChannelId}`})
-      .setTitle(v.title)
-      .setURL(v.link)
-      .setDescription(youtubeVideo.description)
-      .setImage(youtubeVideo.thumbnails.best)
-      .setTimestamp(new Date(v.isoDate));
-    
-    //.setThumbnail(youtubeChannel.thumbnails.best)
-
-    notifications.forEach( n => {
-      const channel = client.channels.cache.get(n.textChannelId);
-      channel.send({ embeds: [embed] });
+  try {
+    await command.execute(interaction);
+  } catch (error) {
+    console.error(error);
+    await interaction.reply({
+      content: 'コマンドの実行中にエラーが発生したでし💦',
+      ephemeral: true
     });
-  });
-  
-  YoutubeFeeds.update(
-    { channelLatestUpdateDate: latestDate.toISOString() },
-    {
-      where: {
-        channelFeedUrl: channelFeedUrl,
-      },
-    },
-  );
-}
+  }
+});
