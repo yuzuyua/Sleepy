@@ -1,7 +1,7 @@
 {
-  "name": "minipotato-bot-by-eoi",
+  "name": "sleepy",
   "version": "0.1.2",
-  "description": "MiniPotato Bot by EOi",
+  "description": "suimin-suport-bot",
   "main": "main.mjs",
   "scripts": {
     "start": "node main.mjs"
@@ -17,7 +17,7 @@
     "youtubei": "^1.4.1"
   },
   "engines": {
-    "node": "16.x"
+    "node": "18.x"
   },
   "repository": {
     "url": "https://glitch.com/edit/#!/minipotato-bot-by-eoi"
