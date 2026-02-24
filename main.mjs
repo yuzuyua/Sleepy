@@ -86,7 +86,7 @@ client.on("messageCreate", async (message) => {
 });
 
 client.on("ready", async () => {
-  await client.user.setActivity('', { type: ActivityType.Custom, state: "睡眠サポート中…" });
+  await client.user.setActivity('♡', { type: ActivityType.Custom, state: "睡眠サポート中…" });
   console.log(`${client.user.tag} がログインしました！`);
 });
 
