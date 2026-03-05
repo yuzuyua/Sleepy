@@ -54,6 +54,14 @@ function playSound(voiceChannel, file) {
         adapterCreator: voiceChannel.guild.voiceAdapterCreator,
     });
 
+    client.once("ready", () => {
+    const alarms = loadAlarms();
+    for (const alarm of alarms) {
+    scheduleAlarm(alarm, client);
+  }
+  console.log("アラーム復元完了");
+});
+    
     const player = createAudioPlayer();
     const resource = createAudioResource(`sounds/${file}`);
 
@@ -64,6 +72,7 @@ function playSound(voiceChannel, file) {
         connection.destroy();
     });
 }
+
 
 
 
