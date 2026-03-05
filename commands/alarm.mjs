@@ -42,9 +42,16 @@ export async function execute(interaction){
     target.setDate(target.getDate() + 1);
     }
     
-    const delay = target - now;
-    
+  　setTimeout(async () => {
+    const guild = await client.guilds.fetch(alarm.guildId);
+    const vc = await guild.channels.fetch(alarm.voiceChannelId);
+   }
+              
     const voiceChannel = interaction.member.voice.channel;
+    if(!voiceChannel){
+        content:"先にVCに接続してください"
+        ephemeral:true,
+    }
 }
 
 function playSound(voiceChannel, file) {
@@ -53,7 +60,7 @@ function playSound(voiceChannel, file) {
         guildId: voiceChannel.guild.id,
         adapterCreator: voiceChannel.guild.voiceAdapterCreator,
     });
-
+    
     client.once("ready", () => {
     const alarms = loadAlarms();
     for (const alarm of alarms) {
@@ -72,6 +79,7 @@ function playSound(voiceChannel, file) {
         connection.destroy();
     });
 }
+
 
 
 
