@@ -35,15 +35,13 @@ export async function execute(interaction){
         content: `${hour}時${minute}分に実行します`,
         ephemeral: true
     });
-}
 
     target.setHours(hour, minute, 0, 0);
 
     if (target <= now) {
     target.setDate(target.getDate() + 1);
-    }
-
-    const delay = target - now;
+        const delay = target - now;
+}
     
 const voiceChannel = interaction.member.voice.channel;
 
@@ -64,3 +62,4 @@ function playSound(voiceChannel, file) {
         connection.destroy();
     });
 }
+
