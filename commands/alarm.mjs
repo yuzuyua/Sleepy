@@ -40,7 +40,8 @@ export async function execute(interaction){
 
     if (target <= now) {
     target.setDate(target.getDate() + 1);
-}
+    }
+    
     const delay = target - now;
     
 const voiceChannel = interaction.member.voice.channel;
@@ -62,5 +63,6 @@ function playSound(voiceChannel, file) {
         connection.destroy();
     });
 }
+
 
 
