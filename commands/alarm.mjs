@@ -41,11 +41,13 @@ export async function execute(interaction){
     if (target <= now) {
     target.setDate(target.getDate() + 1);
     }
+
+    const delay = target - now;
     
   　setTimeout(async () => {
     const guild = await client.guilds.fetch(alarm.guildId);
     const vc = await guild.channels.fetch(alarm.voiceChannelId);
-   }
+    }
               
     const voiceChannel = interaction.member.voice.channel;
     if(!voiceChannel){
@@ -79,6 +81,7 @@ function playSound(voiceChannel, file) {
         connection.destroy();
     });
 }
+
 
 
 
