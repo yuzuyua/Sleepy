@@ -23,5 +23,6 @@ export async function execute(interaction){
 
     await interaction.reply(`${bashikko}が${superjump}をミュートに設定/解除しました。`)
 
-    ({ content:"転送を実行しました", ephemeral:true});
+    ({ content:"ミュートの設定/解除を行いました", ephemeral:true});
 }
+
