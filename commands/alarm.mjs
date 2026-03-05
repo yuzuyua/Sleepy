@@ -20,7 +20,7 @@ export const data = new SlashCommandBuilder()
         .setMinValue(0)
         .setMaxValue(59)
         .setRequired(true)
-    )
+    );
 
 export const devOnly = true;
 
@@ -64,6 +64,7 @@ function playSound(voiceChannel, file) {
         connection.destroy();
     });
 }
+
 
 
 
