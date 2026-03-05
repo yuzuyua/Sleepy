@@ -43,9 +43,9 @@ export async function execute(interaction){
     }
     
     const delay = target - now;
-}
     
-const voiceChannel = interaction.member.voice.channel;
+    const voiceChannel = interaction.member.voice.channel;
+}
 
 function playSound(voiceChannel, file) {
     const connection = joinVoiceChannel({
@@ -64,6 +64,7 @@ function playSound(voiceChannel, file) {
         connection.destroy();
     });
 }
+
 
 
 
