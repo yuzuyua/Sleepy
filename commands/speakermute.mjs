@@ -19,7 +19,8 @@ export async function execute(interaction){
 
     const logChannel = await interaction.client.channels.fetch(LOG_CHANNEL_ID);
 
-    await logChannel.send (`サーバーミュート操作\n操作者 : ${player}\n被設定者 :${suyapi});
+    await logChannel.send (`スピーカーミュート操作\n操作者 : ${player}\n被設定者 :${suyapi}`);
 
     await interaction.reply(`${player}が${suyapi}をスピーカーミュートに設定しました。`)
+
 }
