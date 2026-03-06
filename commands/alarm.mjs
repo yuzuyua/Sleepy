@@ -58,13 +58,6 @@ export async function execute(interaction){
     }
 }
 
-function playSound(voiceChannel, file) {
-    const connection = joinVoiceChannel({
-        channelId: voiceChannel.id,
-        guildId: voiceChannel.guild.id,
-        adapterCreator: voiceChannel.guild.voiceAdapterCreator,
-    });
-    
     client.once("ready", () => {
     const alarms = loadAlarms();
     for (const alarm of alarms) {
@@ -83,6 +76,7 @@ function playSound(voiceChannel, file) {
         connection.destroy();
     });
 }
+
 
 
 
