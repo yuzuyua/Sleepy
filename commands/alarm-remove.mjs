@@ -21,6 +21,6 @@ export async function execute(interaction){
 
   const removed = alarms.splice(number - 1, 1);
 
-  saveAlarms(alarms);
+  saveAlarms(alarms)
 
   await interaction.reply(`${removed[0].hour}時${removed[0].minute}分のアラームを削除しました`);
