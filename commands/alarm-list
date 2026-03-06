@@ -1,6 +1,12 @@
-const alarms = loadAlarms().filter(a => a.guildId === interaction.guildId);
+import { SlashCommandBuilder } from "discord.js";
+export const data = new SlashCommandBuilder()
+  .setName("alarm-list")
   .set description("設定中のアラームを一覧表示します");
 
+export const devOnly =true;
+
+const alarms = loadAlarms().filter(a => a.guildId === interaction.guildId);
+ 
 if (alarms.length === 0) {
   return interaction.reply("アラームはありません");
 }
