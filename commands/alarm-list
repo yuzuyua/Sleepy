@@ -1,0 +1,12 @@
+const alarms = loadAlarms().filter(a => a.guildId === interaction.guildId);
+  .set description("設定中のアラームを一覧表示します");
+
+if (alarms.length === 0) {
+  return interaction.reply("アラームはありません");
+}
+
+const text = alarms.map(a =>
+  `ID:${a.id} <t:${Math.floor(a.executeAt/1000)}:t>`
+).join("\n");
+
+await interaction.reply("設定中アラーム一覧"\n text);
