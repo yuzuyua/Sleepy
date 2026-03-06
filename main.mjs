@@ -38,7 +38,7 @@ const client = new Client({
 client.commands = new Collection();
 CommandsRegister(client);
 
-client.on("clientReady", async () => {
+client.once("ready", async () => {
   await client.user.setActivity('♡', { type: ActivityType.Custom, state: "睡眠サポート中…" });
   console.log(`${client.user.tag} がログインしました！`);
 });
