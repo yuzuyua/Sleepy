@@ -43,6 +43,7 @@ client.once("ready", async () => {
   console.log(`${client.user.tag} がログインしました！`);
 });
 
+console.log("TOKEN:", process.env.TOKEN);
 client.login(process.env.TOKEN);
 
 client.on("interactionCreate", async (interaction) => {
