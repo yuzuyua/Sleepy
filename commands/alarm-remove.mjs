@@ -24,3 +24,4 @@ export async function execute(interaction){
   saveAlarms(alarms)
 
   await interaction.reply(`${removed[0].hour}時${removed[0].minute}分のアラームを削除しました`);
+}
