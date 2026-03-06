@@ -2,7 +2,7 @@ import { SlashCommandBuilder } from 'discord.js';
 
 export const data = new SlashCommandBuilder()
   .setName('alarm-set')
-  .setDescription('アラームをセットします');
+  .setDescription('アラームをセットします')
   .addIntegerOption(option =>
         option
         .setName("hour")
