@@ -5,14 +5,19 @@ export const data = new SlashCommandBuilder()
 
 export const devOnly =true;
 
-const alarms = loadAlarms().filter(a => a.guildId === interaction.guildId);
- 
-if (alarms.length === 0) {
-  return interaction.reply("アラームはありません");
+export async function execute(interaction) {
+
+    const alarms = loadAlarms();
+
+    if (alarms.length === 0) {
+        return interaction.reply("アラームはありません");
+    }
+
+    let message = "現在のアラーム一覧\n";
+
+    alarms.forEach((alarm, index) => {
+        message += `${index + 1}. ${alarm.hour}時${alarm.minute}分\n`;
+    });
+
+    await interaction.reply(message);
 }
-
-const text = alarms.map(a =>
-  `ID:${a.id} <t:${Math.floor(a.executeAt/1000)}:t>`
-).join("\n");
-
-await interaction.reply("設定中アラーム一覧"\n text);
