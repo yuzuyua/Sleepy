@@ -65,6 +65,14 @@ export async function execute(interaction){
   }
   console.log("アラーム復元完了");
 });
+
+
+function playSound(voiceChannel, file) {
+    const connection = joinVoiceChannel({
+        channelId: voiceChannel.id,
+        guildId: voiceChannel.guild.id,
+        adapterCreator: voiceChannel.guild.voiceAdapterCreator,
+    });
     
     const player = createAudioPlayer();
     const resource = createAudioResource(`sounds/${file}`);
@@ -76,6 +84,7 @@ export async function execute(interaction){
         connection.destroy();
     });
 }
+
 
 
 
