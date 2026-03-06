@@ -51,8 +51,10 @@ export async function execute(interaction){
               
     const voiceChannel = interaction.member.voice.channel;
     if(!voiceChannel){
-        content:"先にVCに接続してください"
-        ephemeral:true,
+        return interaction.reply({
+            content:"先にVCに接続してください"
+            ephemeral:true
+        });
     }
 }
 
@@ -81,6 +83,7 @@ function playSound(voiceChannel, file) {
         connection.destroy();
     });
 }
+
 
 
 
