@@ -1,7 +1,7 @@
 import { SlashCommandBuilder } from "discord.js";
 export const data = new SlashCommandBuilder()
   .setName("alarm-list")
-  .set description("設定中のアラームを一覧表示します");
+  .setDescription("設定中のアラームを一覧表示します");
 
 export const devOnly =true;
 
