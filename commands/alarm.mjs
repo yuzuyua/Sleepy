@@ -45,8 +45,6 @@ export async function execute(interaction){
     const delay = target - now;
     
   　setTimeout(async () => {
-        const guild = await client.guilds.fetch(alarm.guildId);
-        const vc = await guild.channels.fetch(alarm.voiceChannelId);
     }
               
     const voiceChannel = interaction.member.voice.channel;
@@ -84,6 +82,7 @@ function playSound(voiceChannel, file) {
         connection.destroy();
     });
 }
+
 
 
 
