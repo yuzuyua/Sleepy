@@ -18,6 +18,12 @@ export const data = new SlashCommandBuilder()
         .setMinValue(0)
         .setMaxValue(59)
         .setRequired(true)
+    )
+    .addIntegerOption(option =>
+        option
+        .setName("sound")
+        .setDescription("再生する音")
+        .setRequired(false)
     );
 
 export const devOnly = true;
