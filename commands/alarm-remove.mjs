@@ -1,6 +1,8 @@
 import { SlashCommandBuilder } from "discord.js";
 
 export const data = new SlashCommandBuilder()
+  .setName("alarm-remove")
+  .setDescription("アラームを削除します")
   .addIntegerOption(option =>
     option
         .setName("number")
