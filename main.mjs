@@ -64,3 +64,22 @@ client.on("interactionCreate", async (interaction) => {
     });
   }
 });
+
+
+function playSound(voiceChannel, file) {
+    const connection = joinVoiceChannel({
+        channelId: voiceChannel.id,
+        guildId: voiceChannel.guild.id,
+        adapterCreator: voiceChannel.guild.voiceAdapterCreator,
+    });
+    
+    const player = createAudioPlayer();
+    const resource = createAudioResource(`sounds/${file}`);
+
+    connection.subscribe(player);
+    player.play(resource);
+
+    player.on(AudioPlayerStatus.Idle, () => {
+        connection.destroy();
+    });
+}
