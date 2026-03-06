@@ -1,7 +1,21 @@
+import { SlashCommandBuilder } from 'discord.js';
+
+export const data = new SlashCommandBuilder()
+  .setName('alarm-set')
+  .setDescription('アラームをセットします');
+
 export async function execute(interaction) {
 
-  const hour = interaction.options.getInteger("hour");
-  const minute = interaction.options.getInteger("minute");
+  const hour = interaction.options.getInteger("hour")
+    .setDescription("時(0~23)")
+    .setMinValue(0)
+    .setMaxValue(23)
+    .setRequired(true);
+  const minute = interaction.options.getInteger("minute")
+    .setDescription("分(0~59)")
+    .setMinValue(0)
+    .setMaxValue(59)
+    .setRequired(true);
   const sound = interaction.options.getString("sound");
 
   const vc = interaction.member.voice.channel;
