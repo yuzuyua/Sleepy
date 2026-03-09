@@ -17,7 +17,7 @@ export async function execute(interaction){
     const bashikko = interaction.user;
     const superjump = interaction.options.getMember("member");
     const start = superjump.voice.channel ? superjump.voice.channel.name : "接続されていません";
-    const spawn = Intersection.options.getChannel("channel");
+    const spawn = Interaction.options.getChannel("channel");
 
     const logChannel = await interaction.client.channels.fetch(LOG_CHANNEL_ID);
 
@@ -25,4 +25,5 @@ export async function execute(interaction){
 
     ({ content:"ミュートの設定/解除を行いました", ephemeral:true});
 }
+
 
