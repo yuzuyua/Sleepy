@@ -38,8 +38,8 @@ const client = new Client({
 client.commands = new Collection();
 CommandsRegister(client);
 
-client.once("ready", async () => {
-  await client.user.setActivity('♡', { type: ActivityType.Custom, state: "現在開発中！" });
+client.on("clientReady", async () => {
+  await client.user.setActivity('⭐', { type: ActivityType.Custom, state: "現在開発中！" });
   console.log(`${client.user.tag} がログインしました！`);
 });
 
