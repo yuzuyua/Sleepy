@@ -39,7 +39,7 @@ client.commands = new Collection();
 CommandsRegister(client);
 
 client.on("clientReady", async () => {
-  await client.user.setActivity('⭐', { type: ActivityType.Custom, state: "現在開発中！" });
+  await client.user.setActivity('🌟', { type: ActivityType.Custom, state: "現在開発中！" });
   console.log(`${client.user.tag} がログインしました！`);
 });
 
